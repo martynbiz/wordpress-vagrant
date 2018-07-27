@@ -9,7 +9,7 @@ Firstly, ensure you have Vagrant installed, then:
 ```
 git clone https://github.com/martynbiz/wordpress-vagrant myproject
 cd myproject
-cp VagrantFile.example VagrantFile
+cp Vagrantfile.example Vagrantfile
 cp provision.sh.example provision.sh
 ```
 
