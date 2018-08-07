@@ -63,3 +63,14 @@ sudo service apache2 reload
 
 # create databases
 echo "create database uos_blog" | mysql -u root -p$MYSQL_ROOT_PASSWORD
+
+# Install wp cli tool
+curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+php wp-cli.phar --info
+chmod +x wp-cli.phar
+sudo mv wp-cli.phar /usr/local/bin/wp
+
+# Create top level pages
+wp post create --post_type=page --post_title='News' --post_content='News content'
+wp post create --post_type=page --post_title='Life on campus' --post_content='Life on campus content'
+# wp post create --post_type=page --post_title='News' --post_status=future --post_date='2018-01-01 00:00:00'
