@@ -13,7 +13,8 @@ cp Vagrantfile.example Vagrantfile
 cp provision.sh.example provision.sh
 ```
 
-Make whatever changes you need to VagrantFile and provision.sh (or leave as is for default configuration).
+Make whatever changes you need to VagrantFile and provision.sh (or leave as is for
+default configuration).
 
 ```
 vagrant up
