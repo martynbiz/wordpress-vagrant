@@ -90,6 +90,9 @@ wp menu create "Primary menu"
 # wp post create --post_type=page --post_title='Research' --post_content='Research content' --post_status=publish
 # wp post create --post_type=page --post_title='Student blogs' --post_content='Student blogs content' --post_status=publish
 
-
-
-# # wp post create --post_type=page --post_title='News' --post_status=future --post_date='2018-01-01 00:00:00'
+# # Create category
+# wp term create category "News" --description="News"
+# wp term create category "Life on campus" --description="Life on campus"
+# wp term create category "Freshers" --description="Freshers"
+# wp term create category "Research" --description="Research"
+# wp term create category "Student blogs" --description="Student blogs"
