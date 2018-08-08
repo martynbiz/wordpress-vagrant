@@ -72,9 +72,10 @@ chmod +x wp-cli.phar
 sudo mv wp-cli.phar /usr/local/bin/wp
 
 # Install wp
-cd /vagrant
-wp config create --dbname=$DB_NAME --dbuser=root --dbpass=$MYSQL_ROOT_PASSWORD
+cd /var/www/uos-blog
 if ! $(wp core is-installed); then
+    wp core download
+    wp config create --dbname=$DB_NAME --dbuser=root --dbpass=$MYSQL_ROOT_PASSWORD
     wp core install --url=example.com --title=Example --admin_user=supervisor --admin_password=strongpassword --admin_email=info@example.com --skip-email
 fi
 
@@ -82,7 +83,7 @@ fi
 wp menu create "Primary menu"
 
 # # Create top level pages
-# cd /vagrant
+# cd /var/www/uos-blog
 # wp post create --post_type=page --post_title='News' --post_content='News content' --post_status=publish
 # wp post create --post_type=page --post_title='Life on campus' --post_content='Life on campus content' --post_status=publish
 # wp post create --post_type=page --post_title='Freshers' --post_content='Freshers content' --post_status=publish

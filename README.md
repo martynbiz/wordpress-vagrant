@@ -14,7 +14,15 @@ cp provision.sh.example provision.sh
 ```
 
 Make whatever changes you need to VagrantFile and provision.sh (or leave as is for
-default configuration).
+default configuration). Below are some recommended changes:
+
+provision.sh
+
+```
+wp core install --url='<Blog URL>' --title='<Blog name>' --admin_user=<Admin user> --admin_password=<Admin user> --admin_email=<Admin email> --skip-email
+```
+
+TODO hosts, etc
 
 ```
 vagrant up
