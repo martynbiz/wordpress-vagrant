@@ -79,16 +79,17 @@ if ! $(wp core is-installed); then
     wp core install --url=example.com --title=Example --admin_user=supervisor --admin_password=strongpassword --admin_email=info@example.com --skip-email
 fi
 
-# Create the menu
-wp menu create "Primary menu"
+# # Create the menu
+# wp menu create "Primary menu"
 
-# # Create top level pages
+# # Create posts with categories
 # cd /var/www/uos-blog
-# wp post create --post_type=page --post_title='News' --post_content='News content' --post_status=publish
-# wp post create --post_type=page --post_title='Life on campus' --post_content='Life on campus content' --post_status=publish
-# wp post create --post_type=page --post_title='Freshers' --post_content='Freshers content' --post_status=publish
-# wp post create --post_type=page --post_title='Research' --post_content='Research content' --post_status=publish
-# wp post create --post_type=page --post_title='Student blogs' --post_content='Student blogs content' --post_status=publish
+# wp post create ./lipsum.txt --post_title='UCAS Clearing: 5 Top Tips from a Uni Recruitment Staffer' --post_status=publish
+# wp post create ./lipsum.txt --post_title='“Special relationship” showmanship to be expected – but contentious issues brew' --post_status=publish
+# wp post create ./lipsum.txt --post_title='UCAS Clearing 2018 Dictionary' --post_status=publish
+# wp post create ./lipsum.txt --post_title='Results Day 2018: What’s Your Action Plan?' --post_status=publish
+# wp post create ./lipsum.txt --post_title='Clearing for Teachers: What You Need to Know' --post_status=publish
+# wp post create ./lipsum.txt --post_title='Keep calm this summer' --post_status=publish
 
 # # Create category
 # wp term create category "News" --description="News"

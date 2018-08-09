@@ -14,39 +14,44 @@ cp provision.sh.example provision.sh
 ```
 
 Make whatever changes you need to VagrantFile and provision.sh (or leave as is for
-default configuration). Below are some recommended changes:
+default configuration). Below are some recommended/optional changes:
 
 provision.sh
 
+This script will install wp-cli so we can install and setup our new installation
+from the command line. This is also really useful when we `vagrant ssh`.
+
+Ensure these are placed at the end of the shell script:
+
+Edit this line with your own user/pw/email for the admin user
+
 ```
+# edit this line...
 wp core install --url='<Blog URL>' --title='<Blog name>' --admin_user=<Admin user> --admin_password=<Admin user> --admin_email=<Admin email> --skip-email
 ```
 
-TODO hosts, etc
+Add some new lines to create posts/categories for testing in dev. These will be
+created on a new vagrant up:
+
+```
+# Create posts
+wp post create ./lipsum.txt --post_title='Keep calm this summer' --post_status=publish
+
+# Create category
+wp term create category "News" --description="News"
+```
+
+Now that provision and vagrantfile are ready, start up the vagrant instance:
 
 ```
 vagrant up
 ```
 
-Once the Vagrant box is setup, download Wordpress files:
+## What next?
 
-```
-vagrant ssh
-cd /var/www/uos-blog
-wget http://wordpress.org/latest.tar.gz
-tar xfz latest.tar.gz
-mv wordpress/* ./
-rmdir ./wordpress/
-```
+Choose/download a theme, create menus, create posts etc 
 
-Create database:
-
-```
-mysql -u username -p
-
-> create database blog;
-```
-
-Installation:
-
-Go to url, step through installation process.
+TODO
+* hosts, etc .. OR configure to /vagrant ; 8080
+* media file
+* allow media files to be uploaded via admin ui
