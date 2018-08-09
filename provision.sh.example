@@ -41,25 +41,25 @@ sudo apt-get install -y php libapache2-mod-php php-mcrypt php-mysql php-curl php
 # setup virtual host
 
 # create apache config
-sudo bash -c 'cat <<EOT >>/etc/apache2/sites-available/uos-blog.conf
+sudo bash -c 'cat <<EOT >>/etc/apache2/sites-available/blog.conf
 <VirtualHost *:80>
-    ServerName uos-blog.vagrant
-    DocumentRoot /var/www/uos-blog
+    ServerName blog.vagrant
+    DocumentRoot /var/www/blog
 
-    <Directory /var/www/uos-blog/>
+    <Directory /var/www/blog/>
         Options FollowSymLinks
         AllowOverride All
     </Directory>
 
     # Logging
-    ErrorLog /var/log/apache2/uos-blog-error.log
+    ErrorLog /var/log/apache2/blog-error.log
     LogLevel notice
-    CustomLog /var/log/apache2/uos-blog-access.log combined
+    CustomLog /var/log/apache2/blog-access.log combined
 </VirtualHost>
 EOT
 '
 
-sudo a2ensite uos-blog.conf
+sudo a2ensite blog.conf
 sudo service apache2 reload
 
 # create databases
@@ -72,7 +72,7 @@ chmod +x wp-cli.phar
 sudo mv wp-cli.phar /usr/local/bin/wp
 
 # Install wp
-cd /var/www/uos-blog
+cd /var/www/blog
 if ! $(wp core is-installed); then
     wp core download
     wp config create --dbname=$DB_NAME --dbuser=root --dbpass=$MYSQL_ROOT_PASSWORD
@@ -83,7 +83,7 @@ fi
 # wp menu create "Primary menu"
 
 # # Create posts with categories
-# cd /var/www/uos-blog
+# cd /var/www/blog
 # wp post create ./lipsum.txt --post_title='UCAS Clearing: 5 Top Tips from a Uni Recruitment Staffer' --post_status=publish
 # wp post create ./lipsum.txt --post_title='“Special relationship” showmanship to be expected – but contentious issues brew' --post_status=publish
 # wp post create ./lipsum.txt --post_title='UCAS Clearing 2018 Dictionary' --post_status=publish
