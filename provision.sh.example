@@ -97,3 +97,8 @@ fi
 # wp term create category "Freshers" --description="Freshers"
 # wp term create category "Research" --description="Research"
 # wp term create category "Student blogs" --description="Student blogs"
+
+# # Add widgets to sidebar
+# wp widget add categories sidebar
+# wp widget add categories recent-posts
+# wp widget add categories search
