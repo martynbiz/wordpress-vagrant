@@ -19,29 +19,37 @@ Add the blog.vagrant domain to the /etc/hosts file:
 192.168.33.60	blog.vagrant
 ```
 
+This domain can be changed if preferred. See optional changes below.
+
 ## Optional changes
 
 Make whatever changes you need to VagrantFile and provision.sh (or leave as is for
 default configuration). Below are some recommended/optional changes:
 
+### Change network IP and/or domain
+
+The are a couple changes required:
+
 VagrantFile
 
-The following is what IP address is assigned to the box.
-
 ```
-config.vm.network "private_network", ip: "192.168.33.60"
+config.vm.network "private_network", ip: "<new IP address>"
 ```
 
-It can be left as is, but remember to add blog.vagrant to your /etc/hosts file.
-For example:
+This new IP address must match the IP address in /etc/hosts.
 
-If this domain ought to be different, set in the hosts file and update the Apache
-VirtualHost config in provision.sh too.
+Also, if changing the domain, find instances of blog.vagrant in provision.sh file
+and change those to the new domain if that has changed too.
+
+### Seeding database on vagrant up
+
+Insert posts, pages, categories etc each time so the blog has content to work with
+even if just in development.
 
 provision.sh
 
 This script will install wp-cli so we can install and setup our new installation
-from the command line. This is also really useful when we `vagrant ssh`.
+from the command line. This is also a really useful tool when we `vagrant ssh`.
 
 Ensure these are placed at the end of the shell script:
 
@@ -65,21 +73,16 @@ wp term create category "News" --description="News"
 
 ## Run vagrant
 
-Now that provision and vagrantfile are ready, start up the vagrant instance:
+Now that provision.sh and Vagrantfile are ready, start up the vagrant instance:
 
 ```
 vagrant up
 ```
 
-## What next?
+It should now be possible to view the new blog in the browser with the domain used.
+This will be http://blog.vagrant if unchanged.
 
-Login to wp-admin
+## What now?
 
-Unless you've change the `wp install` command in provision, your can login with supervisor/strongpassword.
-
-Choose/download a theme, create menus, create posts etc
-
-TODO
-* hosts, etc .. OR configure to /vagrant ; 8080
-* media file
-* allow media files to be uploaded via admin ui
+Unless you've change the `wp install` command in provision, your can login to wp-admin
+with supervisor/strongpassword. Choose/download a theme, create menus, create posts etc
