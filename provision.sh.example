@@ -1,5 +1,17 @@
 #!/usr/bin/env bash
 
+# variables - these can be changed
+
+MYSQL_ROOT_PASSWORD="vagrant1"
+DB_NAME="blog"
+
+WP_SITE_TITLE="Example blog"
+WP_SITE_URL="example.com" # must match /etc/hosts
+WP_ADMIN_USER="admin"
+WP_ADMIN_PW="strongpassword"
+WP_ADMIN_EMAIL="info@example.com"
+
+
 sudo apt-get update
 
 # ========================================
@@ -14,21 +26,12 @@ sudo service apache2 restart
 # ========================================
 # install mysql
 
-MYSQL_ROOT_PASSWORD="vagrant1"
-DB_NAME="blog"
-
 # prevent the prompt screen from showing
 sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password $MYSQL_ROOT_PASSWORD"
 sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $MYSQL_ROOT_PASSWORD"
 
 # install mysql server
 sudo apt-get install -y mysql-server
-
-
-# # ========================================
-# # install redis
-#
-# sudo apt-get install -y redis-server
 
 
 # ========================================
@@ -41,9 +44,9 @@ sudo apt-get install -y php libapache2-mod-php php-mcrypt php-mysql php-curl php
 # setup virtual host
 
 # create apache config
-sudo bash -c 'cat <<EOT >>/etc/apache2/sites-available/blog.conf
+sudo bash -c "cat <<EOT >>/etc/apache2/sites-available/blog.conf
 <VirtualHost *:80>
-    ServerName blog.vagrant
+    ServerName $WP_SITE_URL
     DocumentRoot /var/www/blog
 
     <Directory /var/www/blog/>
@@ -57,7 +60,7 @@ sudo bash -c 'cat <<EOT >>/etc/apache2/sites-available/blog.conf
     CustomLog /var/log/apache2/blog-access.log combined
 </VirtualHost>
 EOT
-'
+"
 
 sudo a2ensite blog.conf
 sudo service apache2 reload
@@ -76,29 +79,14 @@ cd /var/www/blog
 if ! $(wp core is-installed); then
     wp core download
     wp config create --dbname=$DB_NAME --dbuser=root --dbpass=$MYSQL_ROOT_PASSWORD
-    wp core install --url=example.com --title=Example --admin_user=supervisor --admin_password=strongpassword --admin_email=info@example.com --skip-email
+    wp core install --url="'$WP_SITE_URL'" --title="'$WP_SITE_TITLE'" --admin_user="'$WP_ADMIN_USER'" --admin_password="'$WP_ADMIN_PW'" --admin_email="'$WP_ADMIN_EMAIL'" --skip-email
 fi
 
 # # Create the menu
 # wp menu create "Primary menu"
 
 # # Create posts with categories
-# cd /var/www/blog
-# wp post create ./lipsum.txt --post_title='UCAS Clearing: 5 Top Tips from a Uni Recruitment Staffer' --post_status=publish
-# wp post create ./lipsum.txt --post_title='“Special relationship” showmanship to be expected – but contentious issues brew' --post_status=publish
-# wp post create ./lipsum.txt --post_title='UCAS Clearing 2018 Dictionary' --post_status=publish
-# wp post create ./lipsum.txt --post_title='Results Day 2018: What’s Your Action Plan?' --post_status=publish
-# wp post create ./lipsum.txt --post_title='Clearing for Teachers: What You Need to Know' --post_status=publish
-# wp post create ./lipsum.txt --post_title='Keep calm this summer' --post_status=publish
+# wp post create ./lipsum.txt --post_title='Hello Vagrant!' --post_status=publish
 
 # # Create category
 # wp term create category "News" --description="News"
-# wp term create category "Life on campus" --description="Life on campus"
-# wp term create category "Freshers" --description="Freshers"
-# wp term create category "Research" --description="Research"
-# wp term create category "Student blogs" --description="Student blogs"
-
-# # Add widgets to sidebar
-# wp widget add categories sidebar
-# wp widget add categories recent-posts
-# wp widget add categories search

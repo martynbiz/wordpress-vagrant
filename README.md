@@ -38,8 +38,8 @@ config.vm.network "private_network", ip: "<new IP address>"
 
 This new IP address must match the IP address in /etc/hosts.
 
-Also, if changing the domain, find instances of blog.vagrant in provision.sh file
-and change those to the new domain if that has changed too.
+Also, there are variables at the beginning of the provision.sh script to change
+stuff like site URL, site title, etc.
 
 ### Seeding database on vagrant up
 
