@@ -79,7 +79,7 @@ cd /var/www/blog
 if ! $(wp core is-installed); then
     wp core download
     wp config create --dbname=$DB_NAME --dbuser=root --dbpass=$MYSQL_ROOT_PASSWORD
-    wp core install --url="'$WP_SITE_URL'" --title="'$WP_SITE_TITLE'" --admin_user="'$WP_ADMIN_USER'" --admin_password="'$WP_ADMIN_PW'" --admin_email="'$WP_ADMIN_EMAIL'" --skip-email
+    wp core install --url="$WP_SITE_URL" --title="$WP_SITE_TITLE" --admin_user="$WP_ADMIN_USER" --admin_password="$WP_ADMIN_PW" --admin_email="$WP_ADMIN_EMAIL" --skip-email
 fi
 
 # # Create the menu
